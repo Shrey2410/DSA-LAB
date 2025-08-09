@@ -1,5 +1,10 @@
+
+ignoring the missing {} for the forLoop
+
 output should be
 10000
 
 because arr[5]={1} asigns only the first index the value of 1
 if it was arr[5]={0} then all the elements would have been zero 
+
+however without the{} in the for loop there will be no output
