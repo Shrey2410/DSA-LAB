@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool bsearch(int arr[], int start, int end, int key){
+    if(start>end) return false;
+    int mid = start+(end-start)/2;
+    if(arr[mid]==key) return true;
+    if(arr[mid]<key){
+        return bsearch(arr, mid+1, end,key);
+
+    }
+    else{
+        return bsearch(arr,start,mid-1,key);
+
+    }
+
+
+    }
+
+int main(){
+    int arr[]={1,2,11,32,44,99};
+    int size=6;
+    int key=99;
+    bool ans = bsearch(arr,0,size-1,key);
+    if(ans){
+        cout<<"found";
+    }
+    else{
+        cout<<"not found";
+    }
+    return 0;
+}
