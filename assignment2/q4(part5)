@@ -1,0 +1,17 @@
+#include<bits/stdc++.h>
+using namespace std;
+char tolower(char ch){
+    if(ch>='A' && ch<='Z'){
+        ch = ch + 32;
+
+    }
+    return ch;
+
+}
+int main(){
+    char ch = 'B';
+    char lower = tolower(ch);
+    cout<<lower<<endl;
+    return 0;
+
+}
