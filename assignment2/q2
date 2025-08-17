@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+using namespace std;
+void bubblesort(int* arr, int size){
+    if(size==1){
+        return;
+
+
+    }
+    for(int k = 0;k<size-1;k++){
+        if(arr[k]>arr[k+1]) swap(arr[k], arr[k+1]);
+
+    }
+    bubblesort(arr, size-1);
+
+}
+
+int main(){
+    int arr[]={1,4,3,88,55};
+    int size = sizeof(arr)/sizeof(int);
+    bubblesort(arr, size);
+    for(int i=0;i<size;i++){
+        cout<<arr[i]<<" ";
+
+    }
+    return 0;
+
+}
