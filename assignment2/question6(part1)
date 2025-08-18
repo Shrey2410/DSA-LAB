@@ -1,0 +1,64 @@
+// Online C++ compiler to run C++ program online
+#include<bits/stdc++.h>
+using namespace std;
+
+void bubbleSort(int mat[][3], int size){
+    for(int i= 1; i<size-1;i++){
+        for(int j =1; j<size-i;j++){
+            if(mat[j][0] > mat[j+1][0] || (mat[j][0] == mat[j+1][0])&& mat[j][1]>mat[j+1][1]){
+                for(int k =0;k<3);k++){
+                    int temp = mat[j][k];
+                    mat[j][k] = mat[j+1][k];
+                    mat[j+1][k] = temp;
+                }
+            }
+        }
+    }
+}
+
+void transposeSparse(int mat[][3], int transposed[][3]){
+    transposed[0][0] = mat[0][0];
+    transposed[0][1] = mat[0][1];
+    transposed[0][2] = mat[0][2];
+    
+    int k =1;
+    
+    for(int i =0;i<cols;i++){
+        for(int j =1; j<=nonZero;j++){
+            if(mat[j][1] == i){
+                transposed[k][0] = mat[j][1];
+                transposed[k][1] = mat[j][0];
+                transposed[k][2] = mat[j][2];
+                k++;
+            }
+        }
+    }
+}
+
+int main() {
+    int mat[MAX][3], transposed[MAX][3];
+    int rows, cols, nonZero;
+    
+    cout<<"Enter number of rows, cols, and nonZero: "
+    cin>>rows>>cols>>nonZero;
+    
+    mat[0][0] = rows;
+    mat[0][1] = cols;
+    mat[0][2] = nonZero;
+    
+    cout<<"Enter non zero elements: ";
+    for(int i =1; i<=nonZero;i++){
+        cin>>mat[i][0]>>mat[i][1]>>mat[i][2];
+    }
+    
+    bubbleSort(mat,nonZero);
+    
+    transposeSparse(mat,transposed);
+    bubbleSort(transposed,nonZero);
+    
+    cout<<"Transposed Matrix is: "<<endl;
+    
+    
+
+    return 0;
+}
