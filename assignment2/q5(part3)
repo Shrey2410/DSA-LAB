@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int size;
+    cout<<"Enter the matrix order: \n";
+    cin>>size;
+    
+    int arrSize = (size)*(size+1)/2; 
+    
+    
+    int arr[arrSize-1];
+    
+    cout<<"Enter "<<arrSize<<" array elements: "<<endl;
+    
+    
+    
+    for(int i =0; i<arrSize;i++){
+        cin>>arr[i];
+    }
+    
+    int counter =0;\
+    
+    cout<<"The lower triangle matrix is: \n";
+    
+    for(int i = 0;i<size;i++){
+        for(int j =0; j<size;j++){
+            if(i<j){
+                cout<<0<<" ";
+                
+            }else{
+                cout<<arr[counter]<<" ";
+                counter++;
+            }
+            
+        }
+        cout<<"\n";
+    }
+    
+
+    return 0;
+}
