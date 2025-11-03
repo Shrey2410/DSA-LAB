@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+
+class Node{
+   public:
+   int data;
+   Node *next;
+   Node(int v){
+      data=v;
+      next=NULL;
+   }
+};
+
+Node* insertEnd(Node *head,int val){
+   Node *n=new Node(val);
+   if(head==NULL) return n;
+   Node *t=head;
+   while(t->next!=NULL) t=t->next;
+   t->next=n;
+   return head;
+}
+
+Node* reverseList(Node *head){
+   Node *prev=NULL, *curr=head, *nxt=NULL;
+   while(curr!=NULL){
+      nxt=curr->next;
+      curr->next=prev;
+      prev=curr;
+      curr=nxt;
+   }
+   return prev;
+}
+
+void display(Node *head){
+   Node *t=head;
+   while(t){
+      cout<<t->data<<"->";
+      t=t->next;
+   }
+   cout<<"NULL"<<endl;
+}
+
+int main(){
+   Node *head=NULL;
+   int n,x;
+   cout<<"How many nodes: "; cin>>n;
+   for(int i=0;i<n;i++){
+      cin>>x;
+      head=insertEnd(head,x);
+   }
+   cout<<"Original list: "; display(head);
+   head=reverseList(head);
+   cout<<"Reversed list: "; display(head);
+}
