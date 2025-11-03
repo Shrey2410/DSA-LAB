@@ -1,16 +1,30 @@
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
+#include <cstring>
 #define MAX 100
-char stack[MAX];
-int top = -1;
+using namespace std;
+
+class Stack {
+    char arr[MAX];
+    int top;
+public:
+    Stack() { top = -1; }
+    void push(char x) { arr[++top] = x; }
+    char pop() { return arr[top--]; }
+    bool isEmpty() { return top == -1; }
+};
 
 void reverse(char str[]) {
+    Stack s;
     int n = strlen(str);
-    // Push
-    for(int i = 0; i < n; i++)
-        stack[++top] = str[i];
-    // Pop and print
-    for(int i = 0; i < n; i++)
-        str[i] = stack[top--];
-    printf("Reversed: %s\n", str);
+    for(int i = 0; i < n; i++) s.push(str[i]);
+    for(int i = 0; i < n; i++) str[i] = s.pop();
+    cout << "Reversed: " << str << endl;
+}
+
+int main() {
+    char str[MAX];
+    cout << "Enter string: ";
+    cin >> str;
+    reverse(str);
+    return 0;
 }
