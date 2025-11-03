@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+
+#define MAX 100
+
+struct Triplet {
+    int row, col, val;
+};
+
+void printSparse(Triplet arr[], int size) {
+    cout << "Row Col Value\n";
+    for(int i = 0; i < size; i++)
+        cout << arr[i].row << "   " << arr[i].col << "    " << arr[i].val << endl;
+}
+
+void transpose(Triplet input[], Triplet output[], int size) {
+    for(int i = 0; i < size; i++) {
+        output[i].row = input[i].col;
+        output[i].col = input[i].row;
+        output[i].val = input[i].val;
+    }
+}
+
+void add(Triplet A[], int sizeA, Triplet B[], int sizeB, Triplet C[], int &sizeC) {
+    int i = 0, j = 0, k = 0;
+    while(i < sizeA && j < sizeB) {
+        if(A[i].row < B[j].row || (A[i].row == B[j].row && A[i].col < B[j].col))
+            C[k++] = A[i++];
+        else if(B[j].row < A[i].row || (B[j].row == A[i].row && B[j].col < A[i].col))
+            C[k++] = B[j++];
+        else {
+            int sum = A[i].val + B[j].val;
+            if(sum != 0) {
+                C[k].row = A[i].row;
+                C[k].col = A[i].col;
+                C[k].val = sum;
+                k++;
+            }
+            i++; j++;
+        }
+    }
+    while(i < sizeA) C[k++] = A[i++];
+    while(j < sizeB) C[k++] = B[j++];
+    sizeC = k;
+}
+
+void multiply(Triplet A[], int sizeA, Triplet B[], int sizeB, Triplet C[], int &sizeC, int n) {
+    int temp[MAX][MAX] = {0}; // n is number of rows/columns
+
+    for(int i = 0; i < sizeA; i++) {
+        for(int j = 0; j < sizeB; j++) {
+            if(A[i].col == B[j].row) {
+                temp[A[i].row][B[j].col] += A[i].val * B[j].val;
+            }
+        }
+    }
+    sizeC = 0;
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            if(temp[i][j] != 0) {
+                C[sizeC].row = i;
+                C[sizeC].col = j;
+                C[sizeC].val = temp[i][j];
+                sizeC++;
+            }
+}
+
+int main() {
+    Triplet A[MAX] = { {0, 1, 4}, {1, 0, 2}, {2, 2, 8} };
+    Triplet B[MAX] = { {0, 2, 5}, {1, 0, 3}, {2, 1, 7} };
+
+    int sizeA = 3, sizeB = 3, n = 3;
+
+    Triplet tA[MAX];
+    transpose(A, tA, sizeA);
+    cout << "Transpose of matrix A:\n";
+    printSparse(tA, sizeA);
+
+    Triplet sum[MAX];
+    int sizeSum;
+    add(A, sizeA, B, sizeB, sum, sizeSum);
+    cout << "\nAddition of A and B:\n";
+    printSparse(sum, sizeSum);
+
+    Triplet prod[MAX];
+    int sizeProd;
+    multiply(A, sizeA, B, sizeB, prod, sizeProd, n);
+    cout << "\nMultiplication of A and B:\n";
+    printSparse(prod, sizeProd);
+
+    return 0;
+}
