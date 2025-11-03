@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 100
+char stack[MAX];
+int top = -1;
+
+void reverse(char str[]) {
+    int n = strlen(str);
+    // Push
+    for(int i = 0; i < n; i++)
+        stack[++top] = str[i];
+    // Pop and print
+    for(int i = 0; i < n; i++)
+        str[i] = stack[top--];
+    printf("Reversed: %s\n", str);
+}
