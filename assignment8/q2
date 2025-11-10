@@ -1,0 +1,55 @@
+
+Node* searchRecursive(Node* root, int key) {
+    if (root == nullptr || root->data == key) return root;
+    if (key < root->data) return searchRecursive(root->left, key);
+    return searchRecursive(root->right, key);
+}
+
+
+Node* searchIterative(Node* root, int key) {
+    while(root && root->data != key) {
+        root = (key < root->data) ? root->left : root->right;
+    }
+    return root;
+}
+
+Node* findMax(Node* root) {
+    while(root && root->right) root = root->right;
+    return root;
+}
+
+
+Node* findMin(Node* root) {
+    while(root && root->left) root = root->left;
+    return root;
+}
+
+
+Node* inorderSuccessor(Node* root, Node* n) {
+    if (n->right) return findMin(n->right);
+    Node* succ = nullptr;
+    while (root) {
+        if (n->data < root->data) {
+            succ = root;
+            root = root->left;
+        } else if (n->data > root->data) {
+            root = root->right;
+        } else break;
+    }
+    return succ;
+}
+
+
+Node* inorderPredecessor(Node* root, Node* n) {
+    if (n->left) return findMax(n->left);
+    Node* pred = nullptr;
+    while (root) {
+        if (n->data > root->data) {
+            pred = root;
+            root = root->right;
+        } else if (n->data < root->data) {
+            root = root->left;
+        } else break;
+    }
+    return pred;
+}
