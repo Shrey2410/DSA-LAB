@@ -1,0 +1,220 @@
+#include <iostream>
+using namespace std;
+struct Node{
+    int data;
+    Node* next;
+};
+class CircularList{
+    Node* last;
+public:
+    CircularList(){ last = NULL; }
+    void insertFirst(int val){
+        Node* t = new Node;
+        t->data = val;
+        if(last == NULL){
+            last = t;
+            last->next = last;
+        }else{
+            t->next = last->next;
+            last->next = t;
+        }
+    }
+    void insertLast(int val){
+        Node* t = new Node;
+        t->data = val;
+        if(last == NULL){
+            last = t;
+            last->next = last;
+        }else{
+            t->next = last->next;
+            last->next = t;
+            last = t;
+        }
+    }
+    void insertAfter(int key,int val){
+        if(last==NULL) return;
+        Node* p=last->next;
+        do{
+            if(p->data==key){
+                Node* t=new Node;
+                t->data=val;
+                t->next=p->next;
+                p->next=t;
+                if(p==last) last=t;
+                return;
+            }
+            p=p->next;
+        }while(p!=last->next);
+    }
+    void deleteNode(int key){
+        if(last==NULL) return;
+        Node* p=last->next;
+        Node* q=NULL;
+        do{
+            if(p->data==key){
+                if(p==last && p==last->next){
+                    delete p;
+                    last=NULL;
+                    return;
+                }
+                if(p==last->next){
+                    last->next=p->next;
+                    delete p;
+                    return;
+                }
+                if(p==last){
+                    q->next=p->next;
+                    last=q;
+                    delete p;
+                    return;
+                }
+                q->next=p->next;
+                delete p;
+                return;
+            }
+            q=p;
+            p=p->next;
+        }while(p!=last->next);
+    }
+    void search(int val){
+        if(last==NULL){
+            cout<<"Not found"<<endl;
+            return;
+        }
+        Node* p=last->next;
+        do{
+            if(p->data==val){
+                cout<<"Found"<<endl;
+                return;
+            }
+            p=p->next;
+        }while(p!=last->next);
+        cout<<"Not found"<<endl;
+    }
+    void display(){
+        if(last==NULL){
+            cout<<"Empty"<<endl;
+            return;
+        }
+        Node* p=last->next;
+        do{
+            cout<<p->data<<" ";
+            p=p->next;
+        }while(p!=last->next);
+        cout<<endl;
+    }
+};
+int main(){
+    CircularList c;
+    int ch,x,y;
+    while(true){
+        cout<<"1.Insert First 2.Insert Last 3.Insert After 4.Delete 5.Search 6.Display 7.Exit"<<endl;
+        cin>>ch;
+        switch(ch){
+            case 1:cin>>x;c.insertFirst(x);break;
+            case 2:cin>>x;c.insertLast(x);break;
+            case 3:cin>>y>>x;c.insertAfter(y,x);break;
+            case 4:cin>>x;c.deleteNode(x);break;
+            case 5:cin>>x;c.search(x);break;
+            case 6:c.display();break;
+            case 7:return 0;
+        }
+    }
+}
+
+
+
+
+doubly linked list : -
+
+#include <iostream>
+using namespace std;
+struct Node{
+    int data;
+    Node* next;
+    Node* prev;
+};
+class DoublyList{
+    Node* head;
+public:
+    DoublyList(){ head=NULL; }
+    void insertFirst(int val){
+        Node* t=new Node;
+        t->data=val;
+        t->prev=NULL;
+        t->next=head;
+        if(head) head->prev=t;
+        head=t;
+    }
+    void insertLast(int val){
+        Node* t=new Node;
+        t->data=val;
+        t->next=NULL;
+        if(head==NULL){
+            t->prev=NULL;
+            head=t;
+            return;
+        }
+        Node* p=head;
+        while(p->next) p=p->next;
+        p->next=t;
+        t->prev=p;
+    }
+    void insertAfter(int key,int val){
+        Node* p=head;
+        while(p && p->data!=key) p=p->next;
+        if(p==NULL) return;
+        Node* t=new Node;
+        t->data=val;
+        t->next=p->next;
+        t->prev=p;
+        if(p->next) p->next->prev=t;
+        p->next=t;
+    }
+    void deleteNode(int key){
+        Node* p=head;
+        while(p && p->data!=key) p=p->next;
+        if(p==NULL) return;
+        if(p->prev) p->prev->next=p->next;
+        else head=p->next;
+        if(p->next) p->next->prev=p->prev;
+        delete p;
+    }
+    void search(int val){
+        Node* p=head;
+        while(p){
+            if(p->data==val){
+                cout<<"Found"<<endl;
+                return;
+            }
+            p=p->next;
+        }
+        cout<<"Not found"<<endl;
+    }
+    void display(){
+        Node* p=head;
+        if(!p){cout<<"Empty"<<endl;return;}
+        while(p){
+            cout<<p->data<<" ";
+            p=p->next;
+        }
+        cout<<endl;
+    }
+};
+int main(){
+    DoublyList d;
+    int ch,x,y;
+    while(true){
+        cout<<"1.Insert First 2.Insert Last 3.Insert After 4.Delete 5.Search 6.Display 7.Exit"<<endl;
+        cin>>ch;
+        switch(ch){
+            case 1:cin>>x;d.insertFirst(x);break;
+            case 2:cin>>x;d.insertLast(x);break;
+            case 3:cin>>y>>x;d.insertAfter(y,x);break;
+            case 4:cin>>x;d.deleteNode(x);break;
+            case 5:cin>>x;d.search(x);break;
+            case 6:d.display();break;
+            case 7:return 0;
+        }
+    }
+}
