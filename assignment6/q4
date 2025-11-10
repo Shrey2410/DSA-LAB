@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+struct Node{
+    char data;
+    Node* next;
+    Node* prev;
+};
+class DoublyList{
+    Node* head;
+public:
+    DoublyList(){ head=NULL; }
+    void insert(char ch){
+        Node* t=new Node;
+        t->data=ch;
+        t->next=NULL;
+        t->prev=NULL;
+        if(head==NULL) head=t;
+        else{
+            Node* p=head;
+            while(p->next) p=p->next;
+            p->next=t;
+            t->prev=p;
+        }
+    }
+    bool isPalindrome(){
+        if(head==NULL) return true;
+        Node* start=head;
+        Node* end=head;
+        while(end->next) end=end->next;
+        while(start!=end && end->next!=start){
+            if(start->data!=end->data) return false;
+            start=start->next;
+            end=end->prev;
+        }
+        return true;
+    }
+};
+int main(){
+    DoublyList d;
+    string s;
+    cin>>s;
+    for(char c:s) d.insert(c);
+    if(d.isPalindrome()) cout<<"Palindrome";
+    else cout<<"Not Palindrome";
+}
