@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+struct Node{
+    int data;
+    Node* next;
+};
+class CircularList{
+    Node* last;
+public:
+    CircularList(){ last=NULL; }
+    void insert(int val){
+        Node* t=new Node;
+        t->data=val;
+        if(last==NULL){
+            last=t;
+            last->next=last;
+        }else{
+            t->next=last->next;
+            last->next=t;
+            last=t;
+        }
+    }
+    void display(){
+        if(last==NULL) return;
+        Node* p=last->next;
+        do{
+            cout<<p->data<<" ";
+            p=p->next;
+        }while(p!=last->next);
+        cout<<last->next->data;
+    }
+};
+int main(){
+    CircularList c;
+    c.insert(20);
+    c.insert(100);
+    c.insert(40);
+    c.insert(80);
+    c.insert(60);
+    c.display();
+}
