@@ -1,0 +1,86 @@
+1) doubly linked list 
+#include <iostream>
+using namespace std;
+struct Node{
+    int data;
+    Node* next;
+    Node* prev;
+};
+class DoublyList{
+    Node* head;
+public:
+    DoublyList(){ head=NULL; }
+    void insert(int val){
+        Node* t=new Node;
+        t->data=val;
+        t->next=NULL;
+        t->prev=NULL;
+        if(head==NULL) head=t;
+        else{
+            Node* p=head;
+            while(p->next) p=p->next;
+            p->next=t;
+            t->prev=p;
+        }
+    }
+    int size(){
+        int c=0;
+        Node* p=head;
+        while(p){
+            c++;
+            p=p->next;
+        }
+        return c;
+    }
+};
+int main(){
+    DoublyList d;
+    d.insert(10);
+    d.insert(20);
+    d.insert(30);
+    cout<<d.size();
+}
+
+
+2) circular linked list 
+#include <iostream>
+using namespace std;
+struct Node{
+    int data;
+    Node* next;
+};
+class CircularList{
+    Node* last;
+public:
+    CircularList(){ last=NULL; }
+    void insert(int val){
+        Node* t=new Node;
+        t->data=val;
+        if(last==NULL){
+            last=t;
+            last->next=last;
+        }else{
+            t->next=last->next;
+            last->next=t;
+            last=t;
+        }
+    }
+    int size(){
+        if(last==NULL) return 0;
+        int c=0;
+        Node* p=last->next;
+        do{
+            c++;
+            p=p->next;
+        }while(p!=last->next);
+        return c;
+    }
+};
+int main(){
+    CircularList c;
+    c.insert(5);
+    c.insert(15);
+    c.insert(25);
+    c.insert(35);
+    cout<<c.size();
+}
